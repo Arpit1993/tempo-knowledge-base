@@ -8,8 +8,6 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { flattenList, returnRoutes } from "./utils";
 import { OrganisationType } from "./types";
 
-
-
 function App() {
   const [organizationList, setOrganizationList] = useState<OrganisationType>({
     _id: "",
@@ -18,7 +16,7 @@ function App() {
     description: "",
     displayName: "",
     locale: "",
-    navItems: [{ icon: { type: "", value: "" } }],
+    navItems: [{ title: "", type: "", url: "", icon: { type: "", value: "" } }],
     searchPlaceholder: "",
   });
   const [result, setResult] = useState();
@@ -35,16 +33,21 @@ function App() {
   useEffect(() => {
     fetchAllOrganizations();
   }, []);
-  // let dynamicRoutes = returnRoutes(result);
+  let dynamicRoutes = returnRoutes(result);
 
   return (
     <>
       <ErrorBoundary>
         <Routes>
-          <Route path="/" Component={() => <Dashboard result={result} />}>
-            {/* {dynamicRoutes?.map((route) => {
+          <Route
+            path="/"
+            Component={() => (
+              <Dashboard result={result} navLinks={organizationList.navItems} />
+            )}
+          >
+            {dynamicRoutes?.map((route) => {
               return route;
-            })} */}
+            })}
             <Route index element={<LandingPage />} />
             <Route path="*" element={<div>No Article Found</div>} />
           </Route>

@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import {
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Collapse,
   useTheme,
 } from "@mui/material";
 import {
-  ExpandLess as ExpandLessIcon,
-  ExpandMore as ExpandMoreIcon,
+  ExpandMore as CollapseIcon,
+  NavigateNext as MoreToSeeIcon,
 } from "@mui/icons-material";
 import { MenuItem } from "./MenuItem";
 import styled from "@emotion/styled";
@@ -22,6 +21,10 @@ const CustomizedListItem = styled(ListItem)`
   &:hover {
     background-color: rgba(28, 30, 40, 0.6);
   }
+`;
+
+const CustomizedListItemText = styled(ListItemText)`
+  font-size: 12px;
 `;
 export const MultiLevel = ({
   item,
@@ -41,7 +44,6 @@ export const MultiLevel = ({
     setOpen((prev) => !prev);
   };
 
-
   return (
     <React.Fragment>
       <CustomizedListItem
@@ -51,8 +53,8 @@ export const MultiLevel = ({
         onClick={handleClick}
       >
         {/* <ListItemIcon>{item.icon}</ListItemIcon> */}
-        <ListItemText primary={item.text} />
-        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        <CustomizedListItemText primary={item.text} />
+        {open ? <CollapseIcon /> : <MoreToSeeIcon />}
       </CustomizedListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>

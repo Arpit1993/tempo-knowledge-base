@@ -1,11 +1,10 @@
 import {
   ListItem,
-  ListItemIcon,
-  ListItemText,
-  Link,
   useTheme,
   styled,
 } from "@mui/material";
+
+import {Link} from "react-router";
 
 const CustomizedListItem = styled(ListItem)`
   cursor: pointer;
@@ -33,7 +32,7 @@ export const SingleLevel = ({
     setSelectedItem(item.slug);
   };
   return (
-    // <Link href={item.slug} underline="none" onClick={() => handleClick()}>
+    <Link to={item.slug} onClick={() => handleClick()}>
       <CustomizedListItem
         style={
           selectedItem === item.slug
@@ -43,8 +42,8 @@ export const SingleLevel = ({
         onClick={() => handleClick()}
       >
         {/* <ListItemIcon>{item.icon}</ListItemIcon> */}
-        <ListItemText primary={item.text} />
+        <p>{item.text}</p>
       </CustomizedListItem>
-    // </Link>
+     </Link>
   );
 };

@@ -49,7 +49,10 @@ type AuthorDetails = {
     value: string;
   };
   
-  type NavLinks = {
+  export type NavLinks = {
+    title: string;
+    type:  string;
+    url: string;
     icon: NavLinksIcon;
   };
   

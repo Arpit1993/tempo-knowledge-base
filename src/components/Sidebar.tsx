@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import { MenuItem } from "../core-components/MenuItem";
-import { Input, Typography, useTheme } from "@mui/material";
-import { Result } from "../types";
-import { useColorMode } from '../theme/ThemeContext';
+import { Input, Link, Typography, useTheme } from "@mui/material";
+import { NavLinks, Result } from "../types";
+import { useColorMode } from "../theme/ThemeContext";
 import { useEffect, useState } from "react";
-import { LightModeIcon } from "./LightMode";
-import { DarkModeIcon } from "./DarkMode";
+import { LightModeIcon } from "./icons/LightMode";
+import { DarkModeIcon } from "./icons/DarkMode";
+import { returnParent } from "../utils";
 
 const SidebarContainer = styled("aside")(({ theme }) => ({
   width: "280px",
@@ -29,7 +30,7 @@ const SideBarHeaderContainer = styled.div`
   padding: 0px 8px;
 `;
 
-const CustomizedInputButton= styled('button')`
+const CustomizedInputButton = styled("button")`
   border: 1px solid #24283199;
   border-radius: 4px;
   background-color: #1c1f2880;
@@ -44,6 +45,15 @@ const CustomizedButton = styled.button`
   background-color: transparent;
 `;
 
+const SidebarNavLinksContainer = styled.div`
+  border-top: 1px solid #24283199;
+  padding: 32px 0px;
+`;
+
+const LinkWrapper = styled("div")`
+  text-align: left;
+  padding: 8px 16px;
+`;
 const renderSideBar = (
   result,
   selectedItem,
@@ -64,35 +74,76 @@ const renderSideBar = (
 
 export const Sidebar = ({
   result,
-  selectedItem,
-  setSelectedItem,
-  parent,
+  // selectedItem,
+  // setSelectedItem,
+  // parent,
+  navLinks,
 }: {
   result: Result;
-  selectedItem: string;
-  setSelectedItem: (a: string) => void;
-  parent: string;
+  // selectedItem: string;
+  // setSelectedItem: (a: string) => void;
+  // parent: string;
+  navLinks: [NavLinks];
 }) => {
-  const { toggleColorMode } = useColorMode();
-  const [mode, setMode] = useState('dark');
-  const handleClick = () => {
-    setMode((prev) => prev === 'light' ? 'dark' : 'light');
-    toggleColorMode();
+  if (!result) {
+    return;
   }
+  const { toggleColorMode } = useColorMode();
+  const [selectedItem, setSelectedItem] = useState(
+    window.location.pathname.slice(1)
+  );
+  let searchQuery = window.location.pathname.slice(1);
+  const parent = returnParent([...result], searchQuery, "");
+  const [mode, setMode] = useState("dark");
+  const handleClick = () => {
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
+    toggleColorMode();
+  };
   const theme = useTheme();
+
+  console.log("navLinks: ", navLinks);
   return (
     <SidebarContainer>
       <SideBarHeaderContainer>
         <Typography fontWeight={600} textAlign={"center"}>
           TempoLabs
         </Typography>
-        <CustomizedButton onClick={handleClick}>{mode === 'dark' ? <LightModeIcon width={25} height={25} fill={theme.palette.primary.main}/>:  <DarkModeIcon width={25} height={25} fill={theme.palette.primary.main}/>}</CustomizedButton>
+        <CustomizedButton onClick={handleClick}>
+          {mode === "dark" ? (
+            <LightModeIcon
+              width={25}
+              height={25}
+              fill={theme.palette.primary.main}
+            />
+          ) : (
+            <DarkModeIcon
+              width={25}
+              height={25}
+              fill={theme.palette.primary.main}
+            />
+          )}
+        </CustomizedButton>
       </SideBarHeaderContainer>
-      <CustomizedInputButton style={{color: theme.palette.primary.main}}>"Ask AI or search for articles"</CustomizedInputButton>
+      <CustomizedInputButton style={{ color: theme.palette.primary.main }}>
+        "Ask AI or search for articles"
+      </CustomizedInputButton>
 
       <ArticleSideBarContainer>
         {renderSideBar(result, selectedItem, setSelectedItem, parent)}
       </ArticleSideBarContainer>
+      <SidebarNavLinksContainer>
+        {navLinks.map((item) => {
+          return (
+            <>
+              <LinkWrapper>
+                <Link href={item.url} underline="none">
+                  {item.title}
+                </Link>
+              </LinkWrapper>
+            </>
+          );
+        })}
+      </SidebarNavLinksContainer>
     </SidebarContainer>
   );
 };
