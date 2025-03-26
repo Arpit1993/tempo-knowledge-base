@@ -48,7 +48,7 @@ function App() {
             {dynamicRoutes?.map((route) => {
               return route;
             })}
-            <Route index element={<LandingPage />} />
+            <Route index element={<LandingPage organizationList={organizationList}/>} />
             <Route path="*" element={<div>No Article Found</div>} />
           </Route>
         </Routes>

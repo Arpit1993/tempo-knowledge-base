@@ -32,7 +32,6 @@ export const ArticleContainer = styled.div`
 export const ArticleSection = ({ selectedItem }: { selectedItem: string }) => {
   const [article, setArticle] = useState("");
   const [error, setError] = useState(false);
-  // const articleId = selectedItem.split("-")[0];
   const articleId = window.location.pathname.slice(1).split("-")[0];
   console.log(articleId);
   const theme = useTheme();

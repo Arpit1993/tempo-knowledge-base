@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { MenuItem } from "../core-components/MenuItem";
-import { Input, Link, Typography, useTheme } from "@mui/material";
+import { Link, Typography, useTheme } from "@mui/material";
 import { NavLinks, Result } from "../types";
 import { useColorMode } from "../theme/ThemeContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LightModeIcon } from "./icons/LightMode";
 import { DarkModeIcon } from "./icons/DarkMode";
 import { returnParent } from "../utils";
@@ -55,10 +55,10 @@ const LinkWrapper = styled("div")`
   padding: 8px 16px;
 `;
 const renderSideBar = (
-  result,
-  selectedItem,
-  setSelectedItem,
-  selectedParent
+  result: [Result],
+  selectedItem: string,
+  setSelectedItem: (argument: string) => void,
+  selectedParent: string
 ) => {
   return result.map((item) => {
     return (
@@ -74,15 +74,9 @@ const renderSideBar = (
 
 export const Sidebar = ({
   result,
-  // selectedItem,
-  // setSelectedItem,
-  // parent,
   navLinks,
 }: {
   result: Result;
-  // selectedItem: string;
-  // setSelectedItem: (a: string) => void;
-  // parent: string;
   navLinks: [NavLinks];
 }) => {
   if (!result) {
