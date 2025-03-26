@@ -1,7 +1,11 @@
 import styled from "@emotion/styled";
 import { MenuItem } from "../core-components/MenuItem";
-import { Input, Typography } from "@mui/material";
+import { Input, Typography, useTheme } from "@mui/material";
 import { Result } from "../types";
+import { useColorMode } from '../theme/ThemeContext';
+import { useEffect, useState } from "react";
+import { LightModeIcon } from "./LightMode";
+import { DarkModeIcon } from "./DarkMode";
 
 const SidebarContainer = styled("aside")(({ theme }) => ({
   width: "280px",
@@ -20,20 +24,24 @@ const ArticleSideBarContainer = styled.div`
 `;
 
 const SideBarHeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: 0px 8px;
 `;
 
-const CustomizedInput = styled(Input)`
+const CustomizedInputButton= styled('button')`
   border: 1px solid #24283199;
   border-radius: 4px;
   background-color: #1c1f2880;
   margin-top: 8px;
   width: 100%;
-  padding: 0px 4px;
-  &::before {
-    content: "";
-    border-bottom: none;
-  }
+  padding: 8px;
+`;
+
+const CustomizedButton = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
 `;
 
 const renderSideBar = (
@@ -65,16 +73,23 @@ export const Sidebar = ({
   setSelectedItem: (a: string) => void;
   parent: string;
 }) => {
-  
-
+  const { toggleColorMode } = useColorMode();
+  const [mode, setMode] = useState('dark');
+  const handleClick = () => {
+    setMode((prev) => prev === 'light' ? 'dark' : 'light');
+    toggleColorMode();
+  }
+  const theme = useTheme();
   return (
     <SidebarContainer>
       <SideBarHeaderContainer>
         <Typography fontWeight={600} textAlign={"center"}>
           TempoLabs
         </Typography>
-        <CustomizedInput placeholder="Ask AI or search for articles"></CustomizedInput>
+        <CustomizedButton onClick={handleClick}>{mode === 'dark' ? <LightModeIcon width={25} height={25} fill={theme.palette.primary.main}/>:  <DarkModeIcon width={25} height={25} fill={theme.palette.primary.main}/>}</CustomizedButton>
       </SideBarHeaderContainer>
+      <CustomizedInputButton style={{color: theme.palette.primary.main}}>"Ask AI or search for articles"</CustomizedInputButton>
+
       <ArticleSideBarContainer>
         {renderSideBar(result, selectedItem, setSelectedItem, parent)}
       </ArticleSideBarContainer>

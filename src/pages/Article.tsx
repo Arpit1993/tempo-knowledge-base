@@ -6,7 +6,6 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import styled from "@emotion/styled";
 import { ScrollSpySection } from "../components/ScrollSpySection";
-// import { useColorMode } from '../theme/ThemeContext';
 export const Header = styled.h1`
   font-family: sans-serif;
 `;
@@ -36,7 +35,6 @@ export const ArticleSection = ({ selectedItem }: { selectedItem: string }) => {
   const articleId = selectedItem.split("-")[0];
   console.log(selectedItem);
   const theme = useTheme();
-  // const { toggleColorMode } = useColorMode();
   useEffect(() => {
     const fetchArticle = async () => {
       try {
