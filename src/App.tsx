@@ -35,16 +35,16 @@ function App() {
   useEffect(() => {
     fetchAllOrganizations();
   }, []);
-  let dynamicRoutes = returnRoutes(result);
+  // let dynamicRoutes = returnRoutes(result);
 
   return (
     <>
       <ErrorBoundary>
         <Routes>
           <Route path="/" Component={() => <Dashboard result={result} />}>
-            {dynamicRoutes?.map((route) => {
+            {/* {dynamicRoutes?.map((route) => {
               return route;
-            })}
+            })} */}
             <Route index element={<LandingPage />} />
             <Route path="*" element={<div>No Article Found</div>} />
           </Route>

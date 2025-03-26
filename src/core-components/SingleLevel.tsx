@@ -33,17 +33,18 @@ export const SingleLevel = ({
     setSelectedItem(item.slug);
   };
   return (
-    <Link href={item.slug} underline="none" onClick={() => handleClick()}>
+    // <Link href={item.slug} underline="none" onClick={() => handleClick()}>
       <CustomizedListItem
         style={
           selectedItem === item.slug
             ? { backgroundColor: theme.palette.sideBarHighlight.main }
             : {}
         }
+        onClick={() => handleClick()}
       >
         {/* <ListItemIcon>{item.icon}</ListItemIcon> */}
         <ListItemText primary={item.text} />
       </CustomizedListItem>
-    </Link>
+    // </Link>
   );
 };

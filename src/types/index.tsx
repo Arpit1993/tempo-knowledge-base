@@ -64,3 +64,9 @@ type AuthorDetails = {
     searchPlaceholder: string;
     structure?: [ArticleDetails];
   };
+
+  export type Result = {
+    text: string;
+    slug: string;
+    next: Result | null;
+  }

@@ -1,6 +1,3 @@
-import { Route } from "react-router";
-import { ArticleSection } from "../pages/Article";
-
 export function hasChildren(item: any) {
   const { next: children } = item;
 
@@ -66,25 +63,25 @@ export const returnParent = (item, searchQuery, parent) => {
   return null;
 };
 
-export const returnRoutes = (item, listOfRoutes = []) => {
-  if (!item) {
-    return;
-  }
-  let newItem = [...item];
-  let poppedValue = null;
+// export const returnRoutes = (item, listOfRoutes = []) => {
+//   if (!item) {
+//     return;
+//   }
+//   let newItem = [...item];
+//   let poppedValue = null;
 
-  while (newItem.length) {
-    poppedValue = newItem.shift();
-    listOfRoutes.push(
-      <Route path={`${poppedValue.slug}`} Component={ArticleSection} />
-    );
-    if (poppedValue.next && poppedValue.next.length > 0) {
-      returnRoutes(poppedValue.next, listOfRoutes);
-    }
-  }
+//   while (newItem.length) {
+//     poppedValue = newItem.shift();
+//     listOfRoutes.push(
+//       <Route path={`${poppedValue.slug}`} Component={ArticleSection} />
+//     );
+//     if (poppedValue.next && poppedValue.next.length > 0) {
+//       returnRoutes(poppedValue.next, listOfRoutes);
+//     }
+//   }
 
-  return listOfRoutes;
-};
+//   return listOfRoutes;
+// };
 
 export const setupScrollspy = (element) => {
   const links = Array.from(element.querySelectorAll('a[href^="#"]'))

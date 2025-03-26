@@ -30,10 +30,11 @@ export const ArticleContainer = styled.div`
   height: inherit;
 `;
 
-export const ArticleSection = () => {
+export const ArticleSection = ({ selectedItem }: { selectedItem: string }) => {
   const [article, setArticle] = useState("");
-  const articleId = window.location.pathname.slice(1).split("-")[0];
-  console.log(articleId);
+  const [error, setError] = useState(false);
+  const articleId = selectedItem.split("-")[0];
+  console.log(selectedItem);
   const theme = useTheme();
   // const { toggleColorMode } = useColorMode();
   useEffect(() => {
@@ -43,28 +44,36 @@ export const ArticleSection = () => {
         setArticle(result.data[0].body);
       } catch (error) {
         console.log(error);
+        setError(true);
       }
     };
-    fetchArticle();
-  }, []);
+    if (articleId) {
+      fetchArticle();
+    }
+    return () => {
+      setError(false);
+    }
+  }, [articleId]);
 
-  return (
+  return error ? (
+    <p>Error fetching the article. Please select another article</p>
+  ) : (
     <ArticleContainer>
-    <Zoom>
-      <Markdown
-        options={{
-          overrides: {
-            h1: { component: Header },
-            img: { component: CustomImage },
-            Text: { component: Text },
-            p: {component: Text}
-          },
-        }}
-      >
-        {article}
-      </Markdown>
-    </Zoom>
-    {article && <ScrollSpySection />}
+      <Zoom>
+        <Markdown
+          options={{
+            overrides: {
+              h1: { component: Header },
+              img: { component: CustomImage },
+              Text: { component: Text },
+              p: { component: Text },
+            },
+          }}
+        >
+          {article}
+        </Markdown>
+      </Zoom>
+      {article && <ScrollSpySection />}
     </ArticleContainer>
   );
 };
