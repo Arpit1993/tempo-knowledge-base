@@ -7,6 +7,7 @@ import { useState } from "react";
 import { LightModeIcon } from "./icons/LightMode";
 import { DarkModeIcon } from "./icons/DarkMode";
 import { returnParent } from "../utils";
+import { SearchModal } from "./SearchModal";
 
 const SidebarContainer = styled("aside")(({ theme }) => ({
   width: "280px",
@@ -35,6 +36,7 @@ const CustomizedInputButton = styled("button")`
   border-radius: 4px;
   background-color: #1c1f2880;
   margin-top: 8px;
+  cursor: pointer;
   width: 100%;
   padding: 8px;
 `;
@@ -53,6 +55,12 @@ const SidebarNavLinksContainer = styled.div`
 const LinkWrapper = styled("div")`
   text-align: left;
   padding: 8px 16px;
+`;
+
+const CustomizedLink = styled("a")`
+  text-decoration: none;
+  cursor: pointer;
+  
 `;
 const renderSideBar = (
   result: [Result],
@@ -86,9 +94,12 @@ export const Sidebar = ({
   const [selectedItem, setSelectedItem] = useState(
     window.location.pathname.slice(1)
   );
+  const [openModal, setOpenModal] = useState(false);
+  const [mode, setMode] = useState("dark");
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
   let searchQuery = window.location.pathname.slice(1);
   const parent = returnParent([...result], searchQuery, "");
-  const [mode, setMode] = useState("dark");
   const handleClick = () => {
     setMode((prev) => (prev === "light" ? "dark" : "light"));
     toggleColorMode();
@@ -99,9 +110,9 @@ export const Sidebar = ({
   return (
     <SidebarContainer>
       <SideBarHeaderContainer>
-        <Typography fontWeight={600} textAlign={"center"}>
+        <CustomizedLink href="/" style={{color: theme.palette.primary.main}}>
           TempoLabs
-        </Typography>
+        </CustomizedLink>
         <CustomizedButton onClick={handleClick}>
           {mode === "dark" ? (
             <LightModeIcon
@@ -118,7 +129,7 @@ export const Sidebar = ({
           )}
         </CustomizedButton>
       </SideBarHeaderContainer>
-      <CustomizedInputButton style={{ color: theme.palette.primary.main }}>
+      <CustomizedInputButton style={{ color: theme.palette.primary.main }} onClick={handleOpenModal}>
         "Ask AI or search for articles"
       </CustomizedInputButton>
 
@@ -138,6 +149,12 @@ export const Sidebar = ({
           );
         })}
       </SidebarNavLinksContainer>
+      {
+      openModal && (
+        <SearchModal open={openModal} handleClose={handleCloseModal}/>
+      )
+    }
     </SidebarContainer>
+   
   );
 };

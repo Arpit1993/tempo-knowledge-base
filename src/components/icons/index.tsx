@@ -13,3 +13,4 @@ export * from './TerminalIcon';
 export * from './UserGroupIcon';
 export * from './UserIcon';
 export * from './ViewGridAddIcon';
+export * from './CloseIcon';
