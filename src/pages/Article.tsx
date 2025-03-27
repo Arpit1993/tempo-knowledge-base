@@ -62,7 +62,6 @@ export const ArticleSection = ({ selectedItem }: { selectedItem: string }) => {
           options={{
             overrides: {
               h1: { component: Header },
-              img: { component: CustomImage },
               Text: { component: Text },
               p: { component: Text },
             },
