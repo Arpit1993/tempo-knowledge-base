@@ -25,7 +25,7 @@ export const CustomImage = styled.img`
 export const ArticleContainer = styled.div`
   padding: 0px 32px;
   display: flex;
-  max-width: 1200px;
+  max-width: 700px;
   height: inherit;
 `;
 
