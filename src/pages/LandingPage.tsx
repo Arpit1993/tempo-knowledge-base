@@ -23,6 +23,7 @@ import {
 const LandingPageWrapper = styled.div`
   text-align: center;
   max-width: 1200px;
+  padding: 0px 120px;
 `;
 const TextAreaWrapper = styled.div`
   position: relative;

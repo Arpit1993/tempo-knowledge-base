@@ -25,7 +25,7 @@ export const CustomImage = styled.img`
 export const ArticleContainer = styled.div`
   padding: 0px 32px;
   display: flex;
-  max-width: 1200px;
+  max-width: 700px;
   height: inherit;
 `;
 
@@ -50,6 +50,7 @@ export const ArticleSection = ({ selectedItem }: { selectedItem: string }) => {
     }
     return () => {
       setError(false);
+      setArticle("");
     }
   }, [articleId]);
 
@@ -62,7 +63,6 @@ export const ArticleSection = ({ selectedItem }: { selectedItem: string }) => {
           options={{
             overrides: {
               h1: { component: Header },
-              img: { component: CustomImage },
               Text: { component: Text },
               p: { component: Text },
             },
