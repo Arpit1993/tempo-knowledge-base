@@ -50,6 +50,7 @@ export const ArticleSection = ({ selectedItem }: { selectedItem: string }) => {
     }
     return () => {
       setError(false);
+      setArticle("");
     }
   }, [articleId]);
 
